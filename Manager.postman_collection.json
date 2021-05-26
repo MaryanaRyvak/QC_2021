@@ -1,0 +1,354 @@
+{
+	"info": {
+		"_postman_id": "bda9b1be-f022-4ef8-b5a0-151b34c2db40",
+		"name": "Manager",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 1000ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Manager is logged in successfully\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.data[0].login).to.eql(pm.environment.get('MANAGER_LOGIN'));\r",
+							"    pm.expect(jsonData.data[0].logged_in).to.eql(true);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}/auth/login?login={{MANAGER_LOGIN}}&password={{MANAGER_PASS}}",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"auth",
+						"login"
+					],
+					"query": [
+						{
+							"key": "login",
+							"value": "{{MANAGER_LOGIN}}"
+						},
+						{
+							"key": "password",
+							"value": "{{MANAGER_PASS}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "MasterUsers",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response time is less than 1000ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+							"});\r",
+							"\r",
+							"var schema = {\r",
+							"  \"type\": \"object\",\r",
+							"  \"properties\": {\r",
+							"    \"errors\": {\r",
+							"      \"type\": \"null\"\r",
+							"    },\r",
+							"    \"data\": {\r",
+							"      \"type\": \"array\",\r",
+							"      \"items\": [\r",
+							"        {\r",
+							"          \"type\": \"object\",\r",
+							"          \"properties\": {\r",
+							"            \"id\": {\r",
+							"              \"type\": \"integer\"\r",
+							"            },\r",
+							"            \"login\": {\r",
+							"              \"type\": \"string\"\r",
+							"            },\r",
+							"            \"type\": {\r",
+							"              \"type\": \"string\"\r",
+							"            },\r",
+							"            \"email\": {\r",
+							"              \"type\": \"string\"\r",
+							"            },\r",
+							"            \"image\": {\r",
+							"              \"type\": \"null\"\r",
+							"            },\r",
+							"            \"name\": {\r",
+							"              \"type\": \"string\"\r",
+							"            },\r",
+							"            \"surname\": {\r",
+							"              \"type\": \"string\"\r",
+							"            },\r",
+							"            \"failed_auth_count\": {\r",
+							"              \"type\": \"integer\"\r",
+							"            }\r",
+							"          },\r",
+							"          \"required\": [\r",
+							"            \"id\",\r",
+							"            \"login\",\r",
+							"            \"type\",\r",
+							"            \"email\",\r",
+							"            \"image\",\r",
+							"            \"name\",\r",
+							"            \"surname\",\r",
+							"            \"failed_auth_count\"\r",
+							"          ]\r",
+							"        },\r",
+							"        {\r",
+							"          \"type\": \"object\",\r",
+							"          \"properties\": {\r",
+							"            \"id\": {\r",
+							"              \"type\": \"integer\"\r",
+							"            },\r",
+							"            \"login\": {\r",
+							"              \"type\": \"string\"\r",
+							"            },\r",
+							"            \"type\": {\r",
+							"              \"type\": \"string\"\r",
+							"            },\r",
+							"            \"email\": {\r",
+							"              \"type\": \"string\"\r",
+							"            },\r",
+							"            \"image\": {\r",
+							"              \"type\": \"null\"\r",
+							"            },\r",
+							"            \"name\": {\r",
+							"              \"type\": \"string\"\r",
+							"            },\r",
+							"            \"surname\": {\r",
+							"              \"type\": \"string\"\r",
+							"            },\r",
+							"            \"failed_auth_count\": {\r",
+							"              \"type\": \"integer\"\r",
+							"            }\r",
+							"          },\r",
+							"          \"required\": [\r",
+							"            \"id\",\r",
+							"            \"login\",\r",
+							"            \"type\",\r",
+							"            \"email\",\r",
+							"            \"image\",\r",
+							"            \"name\",\r",
+							"            \"surname\",\r",
+							"            \"failed_auth_count\"\r",
+							"          ]\r",
+							"        },\r",
+							"        {\r",
+							"          \"type\": \"object\",\r",
+							"          \"properties\": {\r",
+							"            \"id\": {\r",
+							"              \"type\": \"integer\"\r",
+							"            },\r",
+							"            \"login\": {\r",
+							"              \"type\": \"string\"\r",
+							"            },\r",
+							"            \"type\": {\r",
+							"              \"type\": \"string\"\r",
+							"            },\r",
+							"            \"email\": {\r",
+							"              \"type\": \"string\"\r",
+							"            },\r",
+							"            \"image\": {\r",
+							"              \"type\": \"object\",\r",
+							"              \"properties\": {\r",
+							"                \"id\": {\r",
+							"                  \"type\": \"integer\"\r",
+							"                },\r",
+							"                \"type\": {\r",
+							"                  \"type\": \"string\"\r",
+							"                },\r",
+							"                \"src\": {\r",
+							"                  \"type\": \"string\"\r",
+							"                },\r",
+							"                \"hash\": {\r",
+							"                  \"type\": \"string\"\r",
+							"                }\r",
+							"              },\r",
+							"              \"required\": [\r",
+							"                \"id\",\r",
+							"                \"type\",\r",
+							"                \"src\",\r",
+							"                \"hash\"\r",
+							"              ]\r",
+							"            },\r",
+							"            \"name\": {\r",
+							"              \"type\": \"string\"\r",
+							"            },\r",
+							"            \"surname\": {\r",
+							"              \"type\": \"string\"\r",
+							"            },\r",
+							"            \"failed_auth_count\": {\r",
+							"              \"type\": \"integer\"\r",
+							"            }\r",
+							"          },\r",
+							"          \"required\": [\r",
+							"            \"id\",\r",
+							"            \"login\",\r",
+							"            \"type\",\r",
+							"            \"email\",\r",
+							"            \"image\",\r",
+							"            \"name\",\r",
+							"            \"surname\",\r",
+							"            \"failed_auth_count\"\r",
+							"          ]\r",
+							"        }\r",
+							"      ]\r",
+							"    },\r",
+							"    \"count\": {\r",
+							"      \"type\": \"integer\"\r",
+							"    }\r",
+							"  },\r",
+							"  \"required\": [\r",
+							"    \"errors\",\r",
+							"    \"data\",\r",
+							"    \"count\"\r",
+							"  ]\r",
+							"}\r",
+							"\r",
+							"\r",
+							"pm.test(\"Schema is valid\", function () {\r",
+							"   var jsonData = pm.response.json();\r",
+							"    pm.expect(tv4.validate(jsonData,schema)).to.be.true\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://geocitizen.herokuapp.com/admin/users/type/ROLE_MASTER?page=0&size=10&sort=",
+					"protocol": "https",
+					"host": [
+						"geocitizen",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"admin",
+						"users",
+						"type",
+						"ROLE_MASTER"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "0"
+						},
+						{
+							"key": "size",
+							"value": "10"
+						},
+						{
+							"key": "sort",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"/*pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});*/\r",
+							"\r",
+							"pm.test(\"Response time is less than 2000ms\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "https://geocitizen.herokuapp.com/users/edit",
+					"protocol": "https",
+					"host": [
+						"geocitizen",
+						"herokuapp",
+						"com"
+					],
+					"path": [
+						"users",
+						"edit"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Logout Copy",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Manager isn't logged in\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.data[0].logged_in).to.eql(false);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}/auth/logout",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"auth",
+						"logout"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
